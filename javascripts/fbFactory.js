@@ -1,5 +1,5 @@
 "use strict";
 
 const $ = require('jquery');
-const firebase = require('./');
+const firebase = require('./config/fb-config');
 
