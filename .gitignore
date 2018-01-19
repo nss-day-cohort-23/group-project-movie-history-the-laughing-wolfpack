@@ -1,4 +1,5 @@
 javascripts/config/fb-creds.js
+javascripts/config/movieCreds.js
 stylesheets/
 node_modules
 .DS_store

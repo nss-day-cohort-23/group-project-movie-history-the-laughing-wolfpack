@@ -25,6 +25,7 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "handlebars": "^4.0.11",
+    "hbsfy": "^2.8.1",
     "jquery": "^3.3.0",
     "matchdep": "^2.0.0"
   }
