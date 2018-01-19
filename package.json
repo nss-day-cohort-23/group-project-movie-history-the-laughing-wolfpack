@@ -1,0 +1,31 @@
+{
+  "name": "group-project-movie-history-the-laughing-wolfpack",
+  "version": "1.0.0",
+  "description": "You will be split up into teams, and your team will build a new application to keep track of movies that you have seen, and want to see, with your own ratings. * https://www.themoviedb.org * Request an api key",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nss-day-cohort-23/group-project-movie-history-the-laughing-wolfpack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nss-day-cohort-23/group-project-movie-history-the-laughing-wolfpack/issues"
+  },
+  "homepage": "https://github.com/nss-day-cohort-23/group-project-movie-history-the-laughing-wolfpack#readme",
+  "dependencies": {
+    "firebase": "^4.9.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "handlebars": "^4.0.11",
+    "jquery": "^3.3.0",
+    "matchdep": "^2.0.0"
+  }
+}
