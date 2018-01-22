@@ -23,6 +23,7 @@ module.exports.movieOutput = (data, castArray) => {
 module.exports.watchListMovies = (movie, actors, fbId) => {
     console.log('Actors: ', actors);
     $('#findMoviesContainer').append(`
+        <div class="movieCard">
         <img src='https://image.tmdb.org/t/p/w500/${movie.poster_path}' width='260px' height='370px'>
         <h2>${movie.title} (${movie.release_date.slice(0, 4)})</h2>
         <h3>Starring: </h3>
@@ -32,7 +33,8 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
             <li>${actors[2].name}</li>
         </ul>
         <button id='watched-${fbId}' class='watched-button'>Watched</button>
-        <button id='${fbId}' class='delete{-button'>Delete</button><br>`
+        <button id='${fbId}' class='delete_button'>Delete</button><br>
+        </div>`
     );
 };
 

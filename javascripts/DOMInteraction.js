@@ -213,6 +213,19 @@ let startUnwatchedMovies = (data) => {
     });
 };
 
+// DELETE MOVIE
+$(document).on("click", ".delete_button", function() {
+    console.log("clicked delete", $(this).attr("id"));
+    let deleteMovieId = $(this).attr("id");
+    fbFactory.deleteUserMovie(deleteMovieId)
+    .then( () => {
+        console.log("The movie has been removed from your list!");
+    })
+    .catch( error => {
+        console.log("error", error);
+    });
+});
+
 
 
 
