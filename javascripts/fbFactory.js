@@ -51,16 +51,18 @@ module.exports.addToWatchList = (movieObj) => {
     });
 };
 
-// GETS USERS MOVIES FROM FIREBASE 
+// GETS USERS MOVIES FROM FIREBASE
 module.exports.getMovies = (uid) => {
     return new Promise( (resolve, reject) => {
         $.ajax({
-            url: `https://movie-magic-21975.firebaseio.com/watchList.json?orderBy="uid"&equalTo="${uid}"`,
-        }).done( movie => {
+          url: `https://movie-magic-21975.firebaseapp.com/watchList.json?orderBy="uid"&equalTo="${uid}"`
+        })
+          .done(movie => {
             resolve(movie);
-        }).fail( error => {
+          })
+          .fail(error => {
             reject(error);
-        });
+          });
     });
 };
 

@@ -8,7 +8,8 @@ const auth = require('./userFactory');
 const formatter = require('./formatter');
 const output = require('./DOMoutput');
 
-// USER LOGIN
+$("#logout").hide();
+  // USER LOGIN
 $("#login").click (() => {
     auth
     .authUser()
@@ -20,6 +21,8 @@ $("#login").click (() => {
     .catch(function(error) {
         let errorCode = error.code;
         let errorMessage = error.message;
+        $("#login").hide();
+        $("#logout").show();
     });
 });
 
@@ -27,6 +30,8 @@ $("#login").click (() => {
 $("#logout").click( () => {
     auth.logout()
     .then ( () => {
+        $("#login").show();
+        $("#logout").hide();
         console.log("You've been logged out!");
     });
 });
