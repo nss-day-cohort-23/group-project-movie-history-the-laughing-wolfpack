@@ -5,18 +5,22 @@ const firebase = require('./config/fb-config');
 const movieKey = require('./config/movieCreds');
 
 
+
 module.exports.searchMovies = (input) => {
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `https://api.themoviedb.org/3/search/movie?api_key=${movieKey.apiKey}&query=${input}`
         }).done( (data) => {
+            console.log("promise results", data.results);
             resolve(data.results);
     
         }).fail((error) => {
             reject(error);
+
         });
     });
 };
+
 
 module.exports.getActors = (movieId) => {
     return new Promise((resolve, reject) => {
@@ -43,3 +47,4 @@ module.exports.getMovie = (movieId) => {
         });
     });
 };
+
