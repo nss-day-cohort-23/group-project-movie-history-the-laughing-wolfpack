@@ -9,26 +9,26 @@ const formatter = require('./formatter');
 const output = require('./DOMoutput');
 
 // USER LOGIN
-$("#login").click (() => {
+$("#login").click(() => {
     auth
-    .authUser()
-    .then(function(result) {
-    console.log("result", result);
-    let user = result.user;
-    console.log("user", user);
-    })
-    .catch(function(error) {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-    });
+        .authUser()
+        .then(function (result) {
+            console.log("result", result);
+            let user = result.user;
+            console.log("user", user);
+        })
+        .catch(function (error) {
+            let errorCode = error.code;
+            let errorMessage = error.message;
+        });
 });
 
 // USER LOGOUT
-$("#logout").click( () => {
+$("#logout").click(() => {
     auth.logout()
-    .then ( () => {
-        console.log("You've been logged out!");
-    });
+        .then(() => {
+            console.log("You've been logged out!");
+        });
 });
 
 
@@ -69,23 +69,32 @@ $("#logout").click( () => {
 // });
 
 // This gets movies with no actors
-$("#findMovies").keydown( (key) => {
+
+
+$("#findMovies").keydown((key) => {
     let newSearchArr = [];
-    if(key.which === 13) {
+    if (key.which === 13) {
         $("#searchedMovies").html('');
         let searchNewVal = $("#findMovies").val().toLowerCase();
-        // console.log("searchNewVal", searchNewVal);
+
         movieFactory.searchMovies(searchNewVal)
-        .then( (data) => {
-            let movieInfo = data;
-            // console.log("movie info", movieInfo);
-            movieInfo.forEach( (movie) => {
-                output.movieOutput(movie);
+            .then((data) => {
+                let movieInfo = data;
+                movieInfo.forEach((movie) => {
+                    movieFactory.getActors(movie.id)
+                    .then((castArray) => {
+                        output.movieOutput(movie, castArray);
+                    })
+                    .catch((error) => {
+                        console.log('Error: ', error );
+                    });
+                });
+
             });
-            // console.log("movieInfo", movieInfo);
-        });
     }
-    $("#findMovies").keyup( (key) => {
+
+
+    $("#findMovies").keyup((key) => {
         if (key.which === 13) {
             $("#findMovies").val('');
         }
@@ -94,11 +103,11 @@ $("#findMovies").keydown( (key) => {
 
 
 // USER SEARCH FOR MY MOVIES
-$("#myMovieSearch").keydown( (key) => {
+$("#myMovieSearch").keydown((key) => {
     if (key.which === 13) {
         let searchMyMovies = $("#myMovieSearch").val().toLowerCase();
     }
-    $("#myMovieSearch").keyup( (key) => {
+    $("#myMovieSearch").keyup((key) => {
         if (key.which === 13) {
             $("#myMovieSearch").val('');
         }
@@ -110,24 +119,24 @@ $("#myMovieSearch").keydown( (key) => {
 /**** MOVIE CARD INTERATION ****/
 
 // USER CLICKS "ADD TO WATCH"
-$(document).on("click", ".addToWatch", function() {
-   let addedMovieId = $(this).attr("id");
-   let currentUser = firebase.auth().currentUser;
-   console.log("currentUser", currentUser);
-   let movieObj = {
-       movieId: addedMovieId,
-       uid: currentUser.uid,
-       watched: false,
-       rating: null
-   };
-   fbFactory.addToWatchList(movieObj)
-   .then( (data) => {
-    //    console.log("is anything happening", data);
-   });
+$(document).on("click", ".addToWatch", function () {
+    let addedMovieId = $(this).attr("id");
+    let currentUser = firebase.auth().currentUser;
+    console.log("currentUser", currentUser);
+    let movieObj = {
+        movieId: addedMovieId,
+        uid: currentUser.uid,
+        watched: false,
+        rating: null
+    };
+    fbFactory.addToWatchList(movieObj)
+        .then((data) => {
+            //    console.log("is anything happening", data);
+        });
 });
 
 // USER CLICKS "WATCHED"
-$(document).on("click", ".addWatched", function() {
+$(document).on("click", ".addWatched", function () {
     console.log("watched clicked");
     let movieId = this.id;
     console.log("movieId", movieId);
@@ -136,8 +145,8 @@ $(document).on("click", ".addWatched", function() {
 });
 
 // GET USER'S MOVIES
-    // Get movie id's from getMovies
-$(document).on("click", "#myMovieNav", function() {
+// Get movie id's from getMovies
+$(document).on("click", "#myMovieNav", function () {
     $("#findMoviesContainer").html('');
     let currentUser = firebase.auth().currentUser.uid;
     console.log("My Movies was clicked");
@@ -145,26 +154,26 @@ $(document).on("click", "#myMovieNav", function() {
 
     // This promise gets the current user's movies
     fbFactory.getMovies(currentUser)
-    .then( (data) => {
-        console.log("current user's data", data);
+        .then((data) => {
+            console.log("current user's data", data);
 
-        // This getMovieIds function get's all the movie ids from the user's movies(data)
-        // let addingFbId = formatter.addFbKey(data);
-        // console.log("add keys", addingFbId);
-        let usersMovieIds = formatter.getMovieIds(data);
-        console.log("get movie Ids", usersMovieIds);
+            // This getMovieIds function get's all the movie ids from the user's movies(data)
+            // let addingFbId = formatter.addFbKey(data);
+            // console.log("add keys", addingFbId);
+            let usersMovieIds = formatter.getMovieIds(data);
+            console.log("get movie Ids", usersMovieIds);
 
-        // For each movie id I want to run the getMyMovies promise to get each movie's info
-        usersMovieIds.forEach( id => {
-            movieFactory.getMovie(id)
-            .then( movie => {
-                console.log("this isn't going to work", movie);
-                output.watchListMovies(movie);
+            // For each movie id I want to run the getMyMovies promise to get each movie's info
+            usersMovieIds.forEach(id => {
+                movieFactory.getMovie(id)
+                    .then(movie => {
+                        console.log("this isn't going to work", movie);
+                        output.watchListMovies(movie);
+                    });
             });
+        }).catch(error => {
+            console.log("error", error);
         });
-    }).catch( error => {
-        console.log("error", error);
-    });
 });
 
 
