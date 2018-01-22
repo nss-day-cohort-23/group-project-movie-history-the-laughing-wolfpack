@@ -4,6 +4,38 @@ const $ = require('jquery');
 const firebase = require('./config/fb-config');
 const DOMInteraction = require('./DOMInteraction');
 
+const fbURL = 'https://movie-magic-21975.firebaseio.com';
+
+// UPDATE USER'S MOVIE
+module.exports.updateUserMovie = (data, id) => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: `${fbURL}/watchList/${id}.json`,
+            method: 'PATCH',
+            data: JSON.stringify(data)
+        }).done((data) => {
+            resolve(data);
+        }).fail((error) => {
+            reject(error);
+        });
+    });
+};
+
+// DELETE USER'S MOVIE
+module.exports.deleteUserMovie = (id) => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: `${fbURL}/watchList/${id}.json`,
+            method: 'DELETE',
+        }).done((data) => {
+            resolve(data);
+        }).fail((error) => {
+            reject(error);
+        });
+    });
+};
+
+
 // ADD MOVIES TO FIREBASE
 module.exports.addToWatchList = (movieObj) => {
     return new Promise( (resolve, reject) => {
@@ -33,16 +65,4 @@ module.exports.getMovies = (uid) => {
 };
 
 // UPDATES THE WATCHED KEY WHEN USERS CLICK "WATCHED"
-module.exports.updateWatched = (id) => {
-    return new Promise( (resolve, reject) => {
-        $.ajax({
-            url: `https://movie-magic-21975.firebaseio.com/watchList/${id}.json`,
-            method: "PATCH",
-            data: JSON.stringify({watched: true})
-        }).done( data => {
-            resolve(data);
-        }).fail( error => {
-            reject(error);
-        });
-    });
-};
+

@@ -72,12 +72,13 @@ $("#logout").click( () => {
 $("#findMovies").keydown( (key) => {
     let newSearchArr = [];
     if(key.which === 13) {
-        $("#findMoviesContainer").html('');
+        $("#searchedMovies").html('');
         let searchNewVal = $("#findMovies").val().toLowerCase();
-        movieFactory.searchNewMovie(searchNewVal)
+        // console.log("searchNewVal", searchNewVal);
+        movieFactory.searchMovies(searchNewVal)
         .then( (data) => {
-            let movieInfo = data.results;
-            console.log("movie info", movieInfo);
+            let movieInfo = data;
+            // console.log("movie info", movieInfo);
             movieInfo.forEach( (movie) => {
                 output.movieOutput(movie);
             });
@@ -155,7 +156,7 @@ $(document).on("click", "#myMovieNav", function() {
 
         // For each movie id I want to run the getMyMovies promise to get each movie's info
         usersMovieIds.forEach( id => {
-            movieFactory.getMyMovies(id)
+            movieFactory.getMovie(id)
             .then( movie => {
                 console.log("this isn't going to work", movie);
                 output.watchListMovies(movie);
