@@ -8,22 +8,16 @@ const auth = require('./userFactory');
 const formatter = require('./formatter');
 const output = require('./DOMoutput');
 
-console.log("is this working?");
-
 // USER LOGIN
 $("#login").click (() => {
     auth
     .authUser()
     .then(function(result) {
     console.log("result", result);
-    // The signed-in user info.
     let user = result.user;
     console.log("user", user);
-    //   displayTodos(user.uid);
     })
     .catch(function(error) {
-    // Handle Errors here.
-    //   console.log("error message", errorMessage);
         let errorCode = error.code;
         let errorMessage = error.message;
     });
@@ -83,10 +77,11 @@ $("#findMovies").keydown( (key) => {
         movieFactory.searchNewMovie(searchNewVal)
         .then( (data) => {
             let movieInfo = data.results;
+            console.log("movie info", movieInfo);
             movieInfo.forEach( (movie) => {
                 output.movieOutput(movie);
             });
-            console.log("movieInfo", movieInfo);
+            // console.log("movieInfo", movieInfo);
         });
     }
     $("#findMovies").keyup( (key) => {
@@ -109,6 +104,11 @@ $("#myMovieSearch").keydown( (key) => {
     });
 });
 
+
+
+/**** MOVIE CARD INTERATION ****/
+
+// USER CLICKS "ADD TO WATCH"
 $(document).on("click", ".addToWatch", function() {
    let addedMovieId = $(this).attr("id");
    let currentUser = firebase.auth().currentUser;
@@ -121,6 +121,52 @@ $(document).on("click", ".addToWatch", function() {
    };
    fbFactory.addToWatchList(movieObj)
    .then( (data) => {
-       console.log("is anything happening", data);
+    //    console.log("is anything happening", data);
    });
 });
+
+// USER CLICKS "WATCHED"
+$(document).on("click", ".addWatched", function() {
+    console.log("watched clicked");
+    let movieId = this.id;
+    console.log("movieId", movieId);
+
+    fbFactory.updateWatched(movieId);
+});
+
+// GET USER'S MOVIES
+    // Get movie id's from getMovies
+$(document).on("click", "#myMovieNav", function() {
+    $("#findMoviesContainer").html('');
+    let currentUser = firebase.auth().currentUser.uid;
+    console.log("My Movies was clicked");
+    console.log("currentUser", currentUser);
+
+    // This promise gets the current user's movies
+    fbFactory.getMovies(currentUser)
+    .then( (data) => {
+        console.log("current user's data", data);
+
+        // This getMovieIds function get's all the movie ids from the user's movies(data)
+        // let addingFbId = formatter.addFbKey(data);
+        // console.log("add keys", addingFbId);
+        let usersMovieIds = formatter.getMovieIds(data);
+        console.log("get movie Ids", usersMovieIds);
+
+        // For each movie id I want to run the getMyMovies promise to get each movie's info
+        usersMovieIds.forEach( id => {
+            movieFactory.getMyMovies(id)
+            .then( movie => {
+                console.log("this isn't going to work", movie);
+                output.watchListMovies(movie);
+            });
+        });
+    }).catch( error => {
+        console.log("error", error);
+    });
+});
+
+
+
+
+

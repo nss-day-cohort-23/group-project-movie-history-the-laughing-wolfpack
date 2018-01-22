@@ -18,8 +18,6 @@ module.exports.searchNewMovie = (search) => {
 
 module.exports.castSearch = (movieId) => {
     movieId.forEach( (id) => {
-        console.log("actorSearch promise is running");
-        console.log("id", id);
         return new Promise( (resolve, reject) => {
             $.ajax({
                 url: `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${movieKey.apiKey}`
@@ -31,4 +29,24 @@ module.exports.castSearch = (movieId) => {
             });
         });
     });
+};
+
+module.exports.getMyMovies = (movieIds) => {
+    return new Promise( (resolve, reject) => {
+        $.ajax({
+            url: `https://api.themoviedb.org/3/movie/${movieIds}?api_key=${movieKey.apiKey}`
+        }).done( (data) => {
+            console.log("getMyMovies Data", data);
+            // let myMoviesArr = [];
+            // data.forEach( (movie) => {
+            //     myMoviesArr.push(movie);
+            //     console.log("getMyMovies data", data);
+            //     resolve(myMoviesArr);
+                resolve(data);
+
+            }).fail( (error) => {
+                reject(error);
+            });
+        });
+    // });
 };
