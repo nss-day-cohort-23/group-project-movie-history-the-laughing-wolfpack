@@ -4,6 +4,7 @@ const $ = require('jquery');
 const firebase = require('./config/fb-config');
 const movieKey = require('./config/movieCreds');
 
+
 module.exports.searchMovies = (input) => {
     return new Promise((resolve, reject) => {
         $.ajax({

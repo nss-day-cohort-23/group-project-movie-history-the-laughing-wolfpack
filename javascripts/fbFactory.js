@@ -2,6 +2,7 @@
 
 const $ = require('jquery');
 const firebase = require('./config/fb-config');
+const fbURL = 'https://movie-magic-21975.firebaseio.com';
 
 module.exports.getUserMovies = () => {
     return new Promise((resolve, reject) => {
