@@ -1,33 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Movie Magic</title>
 </head>
+
 <body>
-    <nav>
-        <div id="findMoviesBtn"></div>
-        <div id="myMoviesBtn"></div>
+    <header>
+        <input type="text" id="findMovies" placeholder="Search for new movies">
+        <button id="search-btn">Search</button>
         <button type="button" id="login">Login</button>
         <button type="button" id="logout">Logout</button>
-        <input type="text" id="findMovies" placeholder="Search for new movies">
-        <h5>New Movies</h5><h5>My Movies</h5>
+    </header>
+
+    <nav>
+        <h5 id="myMovieNav"><a href="#">My Movies:</a></h5>
+        <h5 id="displayUnwatched"><a href="#">Unwatched</a></h5>
+        <h5 id="displayWatched"><a href="#">Watched</a></h5>
+        <input type="text" id="myMovieSearch" placeholder="Search your movies">
+        <button type="button" id="my-search-btn">Logout</button>
     </nav>
+
     <div id="container">
-        <div id="findMoviesContainer">
-            <h3>Find Movies</h3>
-            
-        </div>
-        <div id="myMoviesContainer">
-            <h3>My Movies</h3>
-            <input type="text" id="myMovieSearch" placeholder="Search within your movies">
-        </div>
+        <h2 id="search-heading">Search Reults:</h2>
     </div>
+
+
+
     <footer></footer>
 
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script> -->
     <script src="dist/bundle.js"></script>
 </body>
+
 </html>
