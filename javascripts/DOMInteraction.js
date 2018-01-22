@@ -74,6 +74,7 @@ $("#logout").click(() => {
 $("#findMovies").keydown((key) => {
     let newSearchArr = [];
     if (key.which === 13) {
+        $('#findMoviesContainer').html('');
         $("#searchedMovies").html('');
         let searchNewVal = $("#findMovies").val().toLowerCase();
 
@@ -82,12 +83,12 @@ $("#findMovies").keydown((key) => {
                 let movieInfo = data;
                 movieInfo.forEach((movie) => {
                     movieFactory.getActors(movie.id)
-                    .then((castArray) => {
-                        output.movieOutput(movie, castArray);
-                    })
-                    .catch((error) => {
-                        console.log('Error: ', error );
-                    });
+                        .then((castArray) => {
+                            output.movieOutput(movie, castArray);
+                        })
+                        .catch((error) => {
+                            console.log('Error: ', error);
+                        });
                 });
 
             });
@@ -175,6 +176,44 @@ $(document).on("click", "#myMovieNav", function () {
             console.log("error", error);
         });
 });
+
+/////Unwatched List /////
+/////Click Unwatched List /////
+
+$('#displayUnwatched').on('click', function () {
+    fbFactory.getMovies(firebase.auth().currentUser.uid)
+        .then((data) => {
+            startUnwatchedMovies(data);
+        });
+});
+
+let startUnwatchedMovies = (data) => {
+    $('#myMoviesContainer').html('');
+    $('#findMoviesContainer').html('');
+    let fbKeys = Object.keys(data);
+    // console.log('fbKeys', fbKeys );
+    let movies = data;
+    fbKeys.forEach((key) => {
+        if (firebase.auth().currentUser.uid === movies[key].uid && movies[key].watched === false) {
+            console.log('For Each:', key);
+            let currentMovie = {};
+            let movieId = movies[key].movieId;
+            movieFactory.getMovie(movieId)
+                .then((movie) => {
+                    currentMovie = movie;
+                    return movieFactory.getActors(currentMovie.id);
+                })
+                .then((actors) => {
+                    output.watchListMovies(currentMovie, actors, key);
+                })
+                .catch((error) => {
+                    console.log('Error: ', error);
+                });
+        }
+    });
+};
+
+
 
 
 
