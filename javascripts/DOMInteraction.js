@@ -32,45 +32,7 @@ $("#logout").click(() => {
 });
 
 
-// USER SEARCH FOR NEW MOVIES
-// let promiseArr = [
-//     movieFactory.searchNewMovie(searchVewVal),
-//     movieFactory.actorSearch(movieIds)
-// ]
-
-// movieFactory.actorSearch([206647]);
-// console.log("movieFactory.actorSearch([206647])", movieFactory.actorSearch([206647]));
-
-//ATTEMPTNG TO GET THE CAST
-// $("#findMovies").keydown( (key) => {
-//     let newSearchArr = [];
-//     if(key.which === 13) {
-//         $("#findMoviesContainer").html('');
-//         let searchNewVal = $("#findMovies").val().toLowerCase();
-//         movieFactory.searchNewMovie(searchNewVal)
-//         .then( (data) => {
-//             let movieInfo = data.results;
-//             let movieIds = formatter.getMovieIds(movieInfo);
-//             console.log("movieIds", movieIds);
-//             return movieFactory.castSearch(movieIds);
-//             // movieInfo.forEach( (movie) => {
-//             //     output.movieOutput(movie);
-//             // });
-//             // console.log("movieInfo", movieInfo);
-//         }).then( (actors) => {
-//             console.log("actors detail?", actors);
-//         });
-//     }
-//     $("#findMovies").keyup( (key) => {
-//         if (key.which === 13) {
-//             $("#findMovies").val('');
-//         }
-//     });
-// });
-
-// This gets movies with no actors
-
-
+// This gets movies with actors
 $("#findMovies").keydown((key) => {
     let newSearchArr = [];
     if (key.which === 13) {
@@ -103,18 +65,6 @@ $("#findMovies").keydown((key) => {
 });
 
 
-// USER SEARCH FOR MY MOVIES
-$("#myMovieSearch").keydown((key) => {
-    if (key.which === 13) {
-        let searchMyMovies = $("#myMovieSearch").val().toLowerCase();
-    }
-    $("#myMovieSearch").keyup((key) => {
-        if (key.which === 13) {
-            $("#myMovieSearch").val('');
-        }
-    });
-});
-
 
 
 /**** MOVIE CARD INTERATION ****/
@@ -146,21 +96,17 @@ $(document).on("click", ".addWatched", function () {
 });
 
 // GET USER'S MOVIES
+
 // Get movie id's from getMovies
 $(document).on("click", "#myMovieNav", function () {
     $("#findMoviesContainer").html('');
     let currentUser = firebase.auth().currentUser.uid;
-    console.log("My Movies was clicked");
     console.log("currentUser", currentUser);
 
     // This promise gets the current user's movies
     fbFactory.getMovies(currentUser)
         .then((data) => {
             console.log("current user's data", data);
-
-            // This getMovieIds function get's all the movie ids from the user's movies(data)
-            // let addingFbId = formatter.addFbKey(data);
-            // console.log("add keys", addingFbId);
             let usersMovieIds = formatter.getMovieIds(data);
             console.log("get movie Ids", usersMovieIds);
 
@@ -212,6 +158,19 @@ let startUnwatchedMovies = (data) => {
         }
     });
 };
+
+// DELETE MOVIE
+$(document).on("click", ".delete_button", function() {
+    console.log("clicked delete", $(this).attr("id"));
+    let deleteMovieId = $(this).attr("id");
+    fbFactory.deleteUserMovie(deleteMovieId)
+    .then( () => {
+        console.log("The movie has been removed from your list!");
+    })
+    .catch( error => {
+        console.log("error", error);
+    });
+});
 
 
 
