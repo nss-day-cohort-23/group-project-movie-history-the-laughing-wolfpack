@@ -66,7 +66,7 @@ $(document).on("click", ".addToWatch", function () {
 ///// DELETE UWATCHED MOVIE /////
 $(document).on("click", ".delete_button", function () {
     let deleteMovieId = $(this).attr("id");
-    fbFactory.deleteUserMovie(deleteMovieId)        
+    fbFactory.deleteUserMovie(deleteMovieId)
         .then(() => {
             return fbFactory.getMovies(firebase.auth().currentUser.uid);
         })
@@ -78,6 +78,7 @@ $(document).on("click", ".delete_button", function () {
         .catch(error => {
             console.log("error", error);
         });
+
 });
 
 ///// DELETE WATCHED MOVIE /////
@@ -110,6 +111,7 @@ $(document).on('click', '.watched-button', function () {
         .then((data) => {
             controller.startUserMovies(data);
         });
+    $(this).parent().hide().fadeOut(100);
 });
 
 ///// DISPLAY UNWATCHED /////
