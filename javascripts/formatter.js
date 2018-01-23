@@ -1,7 +1,7 @@
 "use strict";
 
 const $ = require('jquery');
-const movieFactory = require('./moviefactory');
+const movieFactory = require('./movieFactory');
 
 
 module.exports.addFbKey = (data) => {
@@ -23,6 +23,3 @@ module.exports.getMovieIds = (data) => {
     console.log("movieIdArr", movieIdArr);
     return movieIdArr;
 };
-
-
-
