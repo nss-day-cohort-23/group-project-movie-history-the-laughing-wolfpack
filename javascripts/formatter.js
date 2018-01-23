@@ -18,8 +18,6 @@ module.exports.getMovieIds = (data) => {
     keys.forEach(key => {
         data[key].fbId = key;
         movieIdArr.push(data[key].movieId);
-        console.log("data with fbId?", data);
     });
-    console.log("movieIdArr", movieIdArr);
     return movieIdArr;
 };
