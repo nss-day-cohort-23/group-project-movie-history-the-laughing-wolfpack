@@ -64,5 +64,18 @@ module.exports.getMovies = (uid) => {
     });
 };
 
+module.exports.checkMovies = (movieId) => {
+    return new Promise( (resolve, reject) => {
+        $.ajax({
+            url: `https://movie-magic-21975.firebaseio.com/watchList.json?orderBy="movieId"&equalTo="${movieId}"`,
+        }).done( movie => {
+            resolve(movie);
+        }).fail( error => {
+            reject(error);
+        });
+    });
+};
+
+
 // UPDATES THE WATCHED KEY WHEN USERS CLICK "WATCHED"
 
