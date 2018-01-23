@@ -9,7 +9,9 @@ const output = require('./DOMoutput');
 const controller = require('./controller');
 
 
-///// USER LOGIN /////
+$("#logout").hide();
+// USER LOGIN
+
 $("#login").click(() => {
     auth
         .authUser()
@@ -21,18 +23,23 @@ $("#login").click(() => {
         .catch(function (error) {
             let errorCode = error.code;
             let errorMessage = error.message;
+            $("#login").hide();
+            $("#logout").show();
         });
 });
 ///// USER LOGOUT /////
 $("#logout").click(() => {
     auth.logout()
-        .then(() => {
-            console.log("You've been logged out!");
-        });
+    .then ( () => {
+        $("#login").show();
+        $("#logout").hide();
+        console.log("You've been logged out!");
+    });
 });
 
 
-///// START SEEACH NEW MOVIES /////
+
+///// START SEARCH NEW MOVIES /////
 $("#findMovies").keydown((key) => {
     $('#findMoviesContainer').html('');
     let newSearchArr = [];
