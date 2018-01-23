@@ -5,10 +5,11 @@ const firebase = require('./config/fb-config');
 const fbFactory = require('./fbFactory');
 const movieFactory = require('./movieFactory');
 const auth = require('./userFactory');
-const formatter = require('./formatter');
 const output = require('./DOMoutput');
+const controller = require('./controller');
 
-// USER LOGIN
+
+///// USER LOGIN /////
 $("#login").click(() => {
     auth
         .authUser()
@@ -22,8 +23,7 @@ $("#login").click(() => {
             let errorMessage = error.message;
         });
 });
-
-// USER LOGOUT
+///// USER LOGOUT /////
 $("#logout").click(() => {
     auth.logout()
         .then(() => {
@@ -32,31 +32,13 @@ $("#logout").click(() => {
 });
 
 
-// This gets movies with actors
+///// START SEEACH NEW MOVIES /////
 $("#findMovies").keydown((key) => {
+    $('#findMoviesContainer').html('');
     let newSearchArr = [];
     if (key.which === 13) {
-        $('#findMoviesContainer').html('');
-        $("#searchedMovies").html('');
-        let searchNewVal = $("#findMovies").val().toLowerCase();
-
-        movieFactory.searchMovies(searchNewVal)
-            .then((data) => {
-                let movieInfo = data;
-                movieInfo.forEach((movie) => {
-                    movieFactory.getActors(movie.id)
-                        .then((castArray) => {
-                            output.movieOutput(movie, castArray);
-                        })
-                        .catch((error) => {
-                            console.log('Error: ', error);
-                        });
-                });
-
-            });
+        controller.startSearch();
     }
-
-
     $("#findMovies").keyup((key) => {
         if (key.which === 13) {
             $("#findMovies").val('');
@@ -65,15 +47,10 @@ $("#findMovies").keydown((key) => {
 });
 
 
-
-
-/**** MOVIE CARD INTERATION ****/
-
-// USER CLICKS "ADD TO WATCH"
+///// ADD TO WATCHLIST /////
 $(document).on("click", ".addToWatch", function () {
     let addedMovieId = $(this).attr("id");
     let currentUser = firebase.auth().currentUser;
-    console.log("currentUser", currentUser);
     let movieObj = {
         movieId: addedMovieId,
         uid: currentUser.uid,
@@ -82,95 +59,86 @@ $(document).on("click", ".addToWatch", function () {
     };
     fbFactory.addToWatchList(movieObj)
         .then((data) => {
-            //    console.log("is anything happening", data);
         });
 });
 
-// USER CLICKS "WATCHED"
-$(document).on("click", ".addWatched", function () {
-    console.log("watched clicked");
-    let movieId = this.id;
-    console.log("movieId", movieId);
 
-    fbFactory.updateWatched(movieId);
-});
-
-// GET USER'S MOVIES
-
-// Get movie id's from getMovies
-$(document).on("click", "#myMovieNav", function () {
-    $("#findMoviesContainer").html('');
-    let currentUser = firebase.auth().currentUser.uid;
-    console.log("currentUser", currentUser);
-
-    // This promise gets the current user's movies
-    fbFactory.getMovies(currentUser)
+///// DELETE UWATCHED MOVIE /////
+$(document).on("click", ".delete_button", function () {
+    let deleteMovieId = $(this).attr("id");
+    fbFactory.deleteUserMovie(deleteMovieId)        
+        .then(() => {
+            return fbFactory.getMovies(firebase.auth().currentUser.uid);
+        })
         .then((data) => {
-            console.log("current user's data", data);
-            let usersMovieIds = formatter.getMovieIds(data);
-            console.log("get movie Ids", usersMovieIds);
-
-            // For each movie id I want to run the getMyMovies promise to get each movie's info
-            usersMovieIds.forEach(id => {
-                movieFactory.getMovie(id)
-                    .then(movie => {
-                        console.log("this isn't going to work", movie);
-                        output.watchListMovies(movie);
-                    });
-            });
-        }).catch(error => {
+            $('#findMoviesContainer').html('');
+            let display = 'unwatched';
+            controller.startUserMovies(data, display);
+        })
+        .catch(error => {
             console.log("error", error);
         });
 });
 
-/////Unwatched List /////
-/////Click Unwatched List /////
-
-$('#displayUnwatched').on('click', function () {
-    fbFactory.getMovies(firebase.auth().currentUser.uid)
+///// DELETE WATCHED MOVIE /////
+$(document).on("click", ".delete_watched", function () {
+    let deleteMovieId = $(this).attr("id");
+    fbFactory.deleteUserMovie(deleteMovieId)
+        .then(() => {
+            return fbFactory.getMovies(firebase.auth().currentUser.uid);
+        })
         .then((data) => {
-            startUnwatchedMovies(data);
+            $('#findMoviesContainer').html('');
+            let display = 'watched';
+            controller.startUserMovies(data, display);
+        })
+        .catch(error => {
+            console.log("error", error);
         });
 });
 
-let startUnwatchedMovies = (data) => {
-    $('#myMoviesContainer').html('');
-    $('#findMoviesContainer').html('');
-    let fbKeys = Object.keys(data);
-    // console.log('fbKeys', fbKeys );
-    let movies = data;
-    fbKeys.forEach((key) => {
-        if (firebase.auth().currentUser.uid === movies[key].uid && movies[key].watched === false) {
-            console.log('For Each:', key);
-            let currentMovie = {};
-            let movieId = movies[key].movieId;
-            movieFactory.getMovie(movieId)
-                .then((movie) => {
-                    currentMovie = movie;
-                    return movieFactory.getActors(currentMovie.id);
-                })
-                .then((actors) => {
-                    output.watchListMovies(currentMovie, actors, key);
-                })
-                .catch((error) => {
-                    console.log('Error: ', error);
-                });
-        }
-    });
-};
-
-// DELETE MOVIE
-$(document).on("click", ".delete_button", function() {
-    console.log("clicked delete", $(this).attr("id"));
-    let deleteMovieId = $(this).attr("id");
-    fbFactory.deleteUserMovie(deleteMovieId)
-    .then( () => {
-        console.log("The movie has been removed from your list!");
-    })
-    .catch( error => {
-        console.log("error", error);
-    });
+///// ADD TO WATCHED /////
+$(document).on('click', '.watched-button', function () {
+    let fbId = this.id.slice(8);
+    let watched = {
+        watched: true
+    };
+    fbFactory.updateUserMovie(watched, fbId)
+        .then(() => {
+            return fbFactory.getMovies(firebase.auth().currentUser.uid);
+        })
+        .then((data) => {
+            controller.startUserMovies(data);
+        });
 });
+
+///// DISPLAY UNWATCHED /////
+$('#displayUnwatched').on('click', function () {
+    $('#findMoviesContainer').html('');
+    let display = 'unwatched';
+    fbFactory.getMovies(firebase.auth().currentUser.uid)
+        .then((data) => {
+            controller.startUserMovies(data, display);
+        });
+});
+
+///// DISPLAY WATCHED /////
+$('#displayWatched').on('click', function () {
+    $('#findMoviesContainer').html('');
+    let display = 'watched';
+    fbFactory.getMovies(firebase.auth().currentUser.uid)
+        .then((data) => {
+            controller.startUserMovies(data, display);
+        });
+});
+
+
+
+
+
+
+
+
 
 
 

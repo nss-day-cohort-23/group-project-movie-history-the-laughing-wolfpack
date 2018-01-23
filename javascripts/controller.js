@@ -8,67 +8,72 @@ const auth = require('./userFactory');
 const formatter = require('./formatter');
 const output = require('./DOMoutput');
 
-// Build a controller that builds an object with the information needed from FireBase and the Movie API
 
-// Info needed 
-
-    // Title
-    // Poster
-    // Year
-    // Cast
-    // UID 
-    // FB Key
-    
-
-
-module.exports.createMovieObj = (searchNewVal, currentUser) => {
-    let movieObj = {};
-    // console.log("searchNewVal", searchNewVal);
+module.exports.startSearch = () => {
+    let searchNewVal = $("#findMovies").val().toLowerCase();
     movieFactory.searchMovies(searchNewVal)
-    .then( (movies) => {
-        console.log("movies from API", movies);
-        movies.forEach( movie => {
-            movieObj.title = movie.title;
-            movieObj.id = movie.id;
-            movieObj.releaseDate = movie.release_date;
-            movieObj.posterPath = movie.poster_path;
+        .then((data) => {
+            let movieInfo = data;
+            movieInfo.forEach((movie) => {
+                movieFactory.getActors(movie.id)
+                    .then((castArray) => {
+                        output.movieOutput(movie, castArray);
+                    })
+                    .catch((error) => {
+                        console.log('Error: ', error);
+                    });
+            });
         });
-        console.log("search controller movie obj", movieObj);
-        return movieObj;
-    });
-    fbFactory.getMovies(currentUser)
-    .then( (movies) => {
-        movies.forEach ( movie => {
-            let key = Object.keys(movie);
-            movieObj.fbId = key;
-            movieObj.rating = movie.rating;
-        });
-        console.log("FB controller movie obj", movieObj);
-        return movieObj;
-        });
-    return movieObj;
-    };
-
-
-module.exports.searchedMovieObj = (searchNewVal) => {
-    // Create an array to hold the movie objects
-    let searchedMovieArr = [];
-    // Call the movieFactory.searchMovies function to get movies from API
-    movieFactory.searchMovies(searchNewVal)
-    .then( (movies) => {
-        console.log("movies from API", movies);
-        // Loop over each movie and add the needed information to the movie object.
-        movies.forEach( movie => {
-            // Create a movie object for each movie
-            let movieObj = {};
-            movieObj.title = movie.title;
-            movieObj.id = movie.id;
-            movieObj.releaseDate = movie.release_date;
-            movieObj.posterPath = movie.poster_path;
-            // Push each movie into the searchedMovieArr
-            searchedMovieArr.push(movieObj);
-        });
-        output.movieOutput(searchedMovieArr);
-    });
-    console.log("searched Movie Arr", searchedMovieArr);
 };
+
+let checkWatched = (movieObject, display) => {
+    if (movieObject.watched === true && display === 'watched') {
+        console.log('WATCHED: TORF', movieObject.watched, display );
+        output.watchedMovies(movieObject, movieObject.actors, movieObject.fbKey);
+    } else if (movieObject.watched === false && display === 'unwatched') {
+        output.watchListMovies(movieObject, movieObject.actors, movieObject.fbKey);
+    }
+};
+
+module.exports.startUserMovies = (data, display) => {
+    console.log('FROM DELETE', data, display );
+    let fbKeys = Object.keys(data);
+    let movies = data;
+    let movieReturnArray = [];
+    fbKeys.forEach((key) => {
+        let currentMovie = {};
+        let movieId = movies[key].movieId;
+        movieFactory.getMovie(movieId)
+            .then((movie) => {
+                currentMovie = movie;
+                return movieFactory.getActors(currentMovie.id);
+            })
+            .then((cast) => {
+                let movieObject = {};
+                movieObject.title = currentMovie.title;
+                movieObject.poster_path = currentMovie.poster_path;
+                movieObject.actors = cast;
+                movieObject.fbKey = key;
+                movieObject.watched = movies[key].watched;
+                movieObject.release_date = currentMovie.release_date;
+                // console.log('Watched: ', movieObject.title, movieObject.actors, movieObject.fbKey );
+                checkWatched(movieObject, display);
+            })
+            .catch((error) => {
+                console.log('Error: ', error);
+            });
+    });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
