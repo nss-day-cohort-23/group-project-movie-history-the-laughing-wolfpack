@@ -12,19 +12,22 @@
 
 <body>
     <header>
-        <input type="text" id="findMovies" placeholder="Search for new movies">
-        <button id="search-btn">Search</button>
-        <button type="button" id="login">Login</button>
-        <button type="button" id="logout">Logout</button>
+        <input class="form-control searchbar" id="findMovies" type="text" placeholder="Search All Movies">
+        <button type="button" class="btn btn-primary btn-lg" id="login">Login</button>
+        <button type="button" class="btn btn-primary btn-lg" id="logout">Logout</button>
     </header>
      
-    <nav>
-        <h5 id="displayUntracked"><a href="#">Show Untracked</a></h5>
-        <h5 id="displayUnwatched"><a href="#">Show Unwatched</a></h5>
-        <h5 id="displayWatched"><a href="#">Show Watched</a></h5>
-        <h5 id="displayFavorites"><a href="#">Show Favorites</a></h5>
-        
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="#">Movie History</a>
+        <span class="breadcrumb-item active" id="currentSection"></span>
     </nav>
+    
+    <div class="toggle-nav">
+        <button type="button" class="show-unwatched filter" id="displayUntracked">Show Untracked</button>
+        <button type="button" class="show-watched filter" id="displayUnwatched">Show Unwatched</button>
+        <button type="button" class="show-watched filter" id="displayWatched">Show Watched</button>
+        <button type="button" class="show-watched filter" id="displayFavorites">Favorites</button>
+    </div>
 
     <div id="movieContainer">
         <div id="findMoviesContainer">
@@ -42,8 +45,27 @@
 
     <footer></footer>
 
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script> -->
+    <link rel='stylesheet' type='text/css' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+
     <script src="dist/bundle.js"></script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container" id="movies">
+    <div class="row" id="movie-container">
+
+    </div>
+</div> -->
