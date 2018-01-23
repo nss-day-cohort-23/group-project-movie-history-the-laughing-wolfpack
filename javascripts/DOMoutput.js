@@ -32,7 +32,19 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     </ul>
     <button id='watched-${fbId}' class='watched-button'>Watched</button>
     <button id='${fbId}' class='delete_button'>Delete</button><br>
-    </div>`
+    </div>
+    <div class="starRatings" id='${fbId}'>
+    <i class="fa fa-star starRating" value="1"></i>
+    <i class="fa fa-star starRating" value="2"></i>
+    <i class="fa fa-star starRating" value="3"></i>
+    <i class="fa fa-star starRating" value="4"></i>
+    <i class="fa fa-star starRating" value="5"></i>
+    <i class="fa fa-star starRating" value="6"></i>
+    <i class="fa fa-star starRating" value="7"></i>
+    <i class="fa fa-star starRating" value="8"></i>
+    <i class="fa fa-star starRating" value="9"></i>
+    <i class="fa fa-star starRating" value="10"></i>
+    <div>`
 );
 };
 
@@ -50,7 +62,19 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
         </ul>
         <button id='watched-${fbId}' class='watched-button'>Watched</button>
         <button id='${fbId}' class='delete_watched'>Delete</button><br>
-        </div>`
+        </div>
+        <div class="starRatings" id='${fbId}'>
+        <i class="fa fa-star starRating" value="1"></i>
+        <i class="fa fa-star starRating" value="2"></i>
+        <i class="fa fa-star starRating" value="3"></i>
+        <i class="fa fa-star starRating" value="4"></i>
+        <i class="fa fa-star starRating" value="5"></i>
+        <i class="fa fa-star starRating" value="6"></i>
+        <i class="fa fa-star starRating" value="7"></i>
+        <i class="fa fa-star starRating" value="8"></i>
+        <i class="fa fa-star starRating" value="9"></i>
+        <i class="fa fa-star starRating" value="10"></i>
+        <div>`
     );
 };
 
