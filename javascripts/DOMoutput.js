@@ -5,18 +5,19 @@ const movieKey = require('./config/movieCreds');
 
 module.exports.movieOutput = (data, castArray) => {
     $("#findMoviesContainer").append(
-        `<div class="movieCard" id=${data.id}>
-        <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="moviePoster" alt="No Movie Poster Available" width='260px' height='370px'>
+        `<div class="col-md-4"> <div class="card bg-light mb-5" style="width: 18rem;" id=${data.id}>
+        <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="card-img-top" alt="No Movie Poster Available" width='260px' height='370px'>
         <br>
-        <h7>${data.title} <i>(${data.release_date.slice(0, 4)})</i></h7>
-          <ul>
-          <li>${castArray[0].name}</li>
-          <li>${castArray[1].name}</li>
-          <li>${castArray[2].name}</li>
-          <li>${castArray[3].name}</li>
-          <li>${castArray[4].name}</li>
-          <a href="#" class="addToWatch" id=${data.id}>Add To Watch List</a>      
-        </div>`
+        <h4 class="card-title text-center">${data.title} <i><h6 class="text-muted">(${data.release_date.slice(0, 4)})</h6></i></h4>
+          <ul class="list-group list-group-flush pt-0">
+          <li class="list-group-item">${castArray[0].name}</li>
+          <li class="list-group-item">${castArray[1].name}</li>
+          <li class="list-group-item">${castArray[2].name}</li>
+          <li class="list-group-item">${castArray[3].name}</li>
+          <li class="list-group-item">${castArray[4].name}</li>
+          </ul>
+          <a href="#" class="card-link rounded-bottom text-center bg-secondary text-white" id=${data.id}>Add To Watch List</a>      
+        </div></div>`
     );
 };
 
