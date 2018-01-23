@@ -132,6 +132,50 @@ $('#displayWatched').on('click', function () {
         });
 });
 
+/******* STAR RATING ***********/
+
+$(document).on("click", ".starRating", function() {
+
+    // Get user
+    let updatedMovieId = $(this).parent().attr("id");
+    console.log("star clicked this", $(this).parent().attr("id") );
+    let movieObj = {};
+    
+    // All stars in the div
+    let stars = $(this).parent().children("i");
+    console.log("stars", stars);
+    
+    // Star that was currently selected
+    let clickedStar = parseInt($(this).attr("value"));
+    console.log("ClickedStar", clickedStar);
+
+    // Adding the star rating to the movieObj
+    movieObj.starRating = clickedStar;
+    movieObj.watched = true;
+
+    // Loop over the stars and remove class highlighted for each one.
+    for(let i = 0; i < stars.length; i++) {
+        $(stars[i]).removeClass("highlighted");
+        console.log("stars loop", stars[i]);
+    }
+    // Loop over the stars and highlight the correct number of stars
+    for(let i = 0; i < clickedStar; i++) {
+        $(stars[i]).addClass("highlighted");
+    }
+    console.log("movie star clicked movie obj", movieObj);
+    console.log("movie star clicked updatedMovieId", updatedMovieId);
+    fbFactory.updateUserMovie(movieObj, updatedMovieId);
+});
+
+
+// ADD THE HIHGLIGHTED CLASS TO STARS WHEN MOVIES LOAD
+
+// module.exports.addHighlightedClass = (movie) => {
+//     let stars = $(movie).children("i");
+//     for(let i = 0; i < movie.starRating; i++) {
+//         $(stars[i]).addClass("highlighted");
+//     }
+// }
 
 
 
