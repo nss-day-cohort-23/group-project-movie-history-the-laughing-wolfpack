@@ -12,34 +12,31 @@
 
 <body>
     <header>
-        <input class="form-control searchbar" id="findMovies" type="text" placeholder="Search All Movies">
-        <button type="button" class="btn btn-primary btn-lg" id="login">Login</button>
-        <button type="button" class="btn btn-primary btn-lg" id="logout">Logout</button>
+        <input class="searchbar m-2 p-2" id="findMovies" type="text" placeholder="Search All Movies">
+        <button type="button" class="btn btn-primary btn-lg m-2" id="login">Login</button>
+        <button type="button" class="btn btn-primary btn-lg m-2" id="logout">Logout</button>
     </header>
      
     <nav class="breadcrumb">
         <a class="breadcrumb-item" href="#">Movie History</a>
         <span class="breadcrumb-item active" id="currentSection"></span>
     </nav>
-    
+
     <div class="toggle-nav">
-        <button type="button" class="show-unwatched filter" id="displayUntracked">Show Untracked</button>
-        <button type="button" class="show-watched filter" id="displayUnwatched">Show Unwatched</button>
-        <button type="button" class="show-watched filter" id="displayWatched">Show Watched</button>
-        <button type="button" class="show-watched filter" id="displayFavorites">Favorites</button>
+        <button type="button" class="btn btn-secondary show-untracked filter" id="displayUntracked">Show Untracked</button>
+        <button type="button" class="btn btn-secondary show-unwatched filter" id="displayUnwatched">Show Unwatched</button>
+        <button type="button" class="btn btn-secondary show-watched filter" id="displayWatched">Show Watched</button>
+        <button type="button" class="btn btn-secondary show-favorites filter" id="displayFavorites">Favorites</button>
     </div>
 
-    <div id="movieContainer">
-        <div id="findMoviesContainer">
-            <h3>Find Movies</h3>
-            <div id="searchedMovies"></div>
+    <div class = "container">
+        <div class = "row" id="findMoviesContainer">
+            <!-- movies cards appended here -->
         </div>
-
+    </div>
     
 
-    <div id="container">
-
-    </div>
+   
 
 
 
@@ -68,4 +65,4 @@
     <div class="row" id="movie-container">
 
     </div>
-</div> -->
+</div> 
