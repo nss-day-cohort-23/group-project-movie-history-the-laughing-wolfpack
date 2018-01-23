@@ -1,10 +1,12 @@
 "use strict";
 
 const $ = require('jquery');
+const movieFactory = require('./moviefactory');
+
 
 module.exports.addFbKey = (data) => {
     let keys = Object.keys(data);
-    keys.forEach( key => {
+    keys.forEach(key => {
         data[key].fbId = key;
     });
     return data;
@@ -24,11 +26,3 @@ module.exports.getMovieIds = (data) => {
 
 
 
-// FUNCTION THAT COLLECTS USER'S MOVIE IDS  
-// module.exports.getUserMoviesIds = (data) => {
-//     let userMovieIdArr = [];
-//     data.forEach( obj => {
-//         userMovieIdArr.push(obj.movieId);
-//     });
-//     console.log("user's movie IDs", userMovieIdArr);
-// };
