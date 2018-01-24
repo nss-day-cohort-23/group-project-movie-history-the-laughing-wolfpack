@@ -144,6 +144,7 @@ $('#displayFavorites').on('click', function () {
   .then(data => {
     controller.startUserMovies(data, display);
   });
+});
   
 $("#displayUntracked").click(() => {
     let display = 'untracked';
