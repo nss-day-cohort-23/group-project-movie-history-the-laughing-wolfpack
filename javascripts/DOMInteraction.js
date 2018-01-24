@@ -142,11 +142,11 @@ $(document).on("click", ".starRating", function() {
     let updatedMovieId = $(this).parent().attr("id");
     console.log("star clicked this", $(this).parent().attr("id") );
     let movieObj = {};
-    
+
     // All stars in the div
     let stars = $(this).parent().children("i");
     console.log("stars", stars);
-    
+
     // Star that was currently selected
     let clickedStar = parseInt($(this).attr("value"));
     console.log("ClickedStar", clickedStar);
@@ -168,27 +168,3 @@ $(document).on("click", ".starRating", function() {
     console.log("movie star clicked updatedMovieId", updatedMovieId);
     fbFactory.updateUserMovie(movieObj, updatedMovieId);
 });
-
-
-// ADD THE HIHGLIGHTED CLASS TO STARS WHEN MOVIES LOAD
-
-// module.exports.addHighlightedClass = (movie) => {
-//     let stars = $(movie).children("i");
-//     for(let i = 0; i < movie.starRating; i++) {
-//         $(stars[i]).addClass("highlighted");
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
