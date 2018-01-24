@@ -183,6 +183,8 @@ firebase.auth().onAuthStateChanged(() => {
             .then((watchList) => {
                 controller.startUserMovies(watchList, display);
             });
+    } else {
+        $("findMoviesContainer").empty();
     }
 });
     
