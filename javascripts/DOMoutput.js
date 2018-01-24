@@ -47,7 +47,6 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
 };
 
 module.exports.watchedMovies = (movie, actors, fbId) => {
-  console.log(movie);
     $('#findMoviesContainer').append(`
     <div class="movieCard">
         <img src='https://image.tmdb.org/t/p/w500/${movie.poster_path}' width='260px' height='370px'>
