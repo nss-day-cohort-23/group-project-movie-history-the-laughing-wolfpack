@@ -14,13 +14,12 @@ $("#login").click(() => {
     auth
         .authUser()
         .then(function (result) {
-            console.log("result", result);
             let user = result.user;
-            console.log("user", user);
         })
         .catch(function (error) {
             let errorCode = error.code;
             let errorMessage = error.message;
+            console.log(error);
         });
 });
 ///// USER LOGOUT /////
@@ -144,7 +143,6 @@ $(document).on("click", ".starRating", function() {
     
     // All stars in the div
     let stars = $(this).parent().children("i");
-
     
     // Star that was currently selected
     let clickedStar = parseInt($(this).attr("value"));
