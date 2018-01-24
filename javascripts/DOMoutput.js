@@ -13,7 +13,7 @@ module.exports.movieOutput = (data, castArray) => {
         <li>${castArray[0].name}</li>
         <li>${castArray[1].name}</li>
         <li>${castArray[2].name}</li>
-        <a href="#" class="addToWatch" id=${data.id} class>Add To Watch List</a>      
+        <button type = "button" id='${data.id}' class='addToWatch btn btn-secondary'>Add To Watch List</button>      
         </div>`
     );
 };
@@ -29,9 +29,8 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     <li>${actors[1].name}</li>
     <li>${actors[2].name}</li>
     </ul>
-    <button id='watched-${fbId}' class='watched-button'>Watched</button>
-    <button id='${fbId}' class='delete_button'>Delete</button><br>
-    </div>
+    <button type = "button" id='${fbId}' class='delete_button btn btn-secondary'>Delete</button><br>
+    
     <div class="starRatings" id='${fbId}'>
     <i class="fa fa-star starRating" value="1"></i>
     <i class="fa fa-star starRating" value="2"></i>
@@ -43,7 +42,8 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     <i class="fa fa-star starRating" value="8"></i>
     <i class="fa fa-star starRating" value="9"></i>
     <i class="fa fa-star starRating" value="10"></i>
-    <div>`
+    <div>
+    </div>`
 );
 };
 
@@ -58,9 +58,8 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
             <li>${actors[1].name}</li>
             <li>${actors[2].name}</li>
         </ul>
-        <button id='watched-${fbId}' class='watched-button'>Watched</button>
-        <button id='${fbId}' class='delete_watched'>Delete</button><br>
-        </div>
+        <button type = "button" id='${fbId}' class='delete_button btn btn-secondary'>Delete</button><br>
+        
         <div class="starRatings" id='${fbId}'>
         <i class="fa fa-star starRating" value="1"></i>
         <i class="fa fa-star starRating" value="2"></i>
@@ -72,7 +71,8 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
         <i class="fa fa-star starRating" value="8"></i>
         <i class="fa fa-star starRating" value="9"></i>
         <i class="fa fa-star starRating" value="10"></i>
-        <div>`
+        <div>
+        </div>`
     );
 };
 
