@@ -13,7 +13,7 @@ module.exports.movieOutput = (data, castArray) => {
         <li>${castArray[0].name}</li>
         <li>${castArray[1].name}</li>
         <li>${castArray[2].name}</li>
-        <a href="#" class="addToWatch" id=${data.id} class>Add To Watch List</a>      
+        <button type = "button" id='${data.id}' class='addToWatch btn btn-secondary'>Add To Watch List</button>      
         </div>`
     );
 };
