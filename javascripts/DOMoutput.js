@@ -81,3 +81,8 @@ module.exports.addHighlightedStars = (movie) => {
       $(stars[i]).addClass("highlighted");
   }
 };
+
+module.exports.displaySearchPath = (selectedPath) => {
+    console.log(selectedPath);
+    // $("#currentSection").html(`${selectedPath}`);
+};
