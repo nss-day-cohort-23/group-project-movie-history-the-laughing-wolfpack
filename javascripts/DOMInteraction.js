@@ -173,3 +173,15 @@ $(document).on("click", ".starRating", function() {
     }
     fbFactory.updateUserMovie(movieObj, updatedMovieId);
 });
+
+// Listens for firebase's onAuthStateChanged event, toggling login/logout btns
+// accordingly
+firebase.auth().onAuthStateChanged(() => {
+  if(firebase.auth().currentUser !== null){
+    $("#login").hide();
+    $("#logout").show();
+  } else if(firebase.auth().currentUser === null){
+    $("#logout").hide();
+    $("#login").show();
+  }
+});
