@@ -15,7 +15,7 @@ module.exports.movieOutput = (data, castArray) => {
         <li>${castArray[0].name}</li>
         <li>${castArray[1].name}</li>
         <li>${castArray[2].name}</li>
-        <button type = "button" id='${data.id}' class='addToWatch btn btn-secondary'>Add To Watch List</button>      
+        <button type = "button" id='${data.id}' class='addToWatch btn btn-secondary'>Add To Watch List</button>
         </div>`
     );
 };
@@ -32,7 +32,7 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     <li>${actors[2].name}</li>
     </ul>
     <button type = "button" id='${fbId}' class='delete_button btn btn-secondary'>Delete</button><br>
-    
+
     <div class="starRatings" id='${fbId}'>
     <i class="fa fa-star starRating" value="1"></i>
     <i class="fa fa-star starRating" value="2"></i>
@@ -44,7 +44,6 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     <i class="fa fa-star starRating" value="8"></i>
     <i class="fa fa-star starRating" value="9"></i>
     <i class="fa fa-star starRating" value="10"></i>
-    <div>
     </div>`
 );
 };
@@ -61,7 +60,7 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
             <li>${actors[2].name}</li>
         </ul>
         <button type = "button" id='${fbId}' class='delete_button btn btn-secondary'>Delete</button><br>
-        
+
         <div class="starRatings" id='${fbId}'>
         <i class="fa fa-star starRating" value="1"></i>
         <i class="fa fa-star starRating" value="2"></i>
@@ -73,8 +72,20 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
         <i class="fa fa-star starRating" value="8"></i>
         <i class="fa fa-star starRating" value="9"></i>
         <i class="fa fa-star starRating" value="10"></i>
-        <div>
         </div>`
     );
 };
 
+module.exports.addHighlightedStars = (movie) => {
+  let elm = `div.starRatings#${movie.fbKey}`;
+  let stars = $(elm).children("i");
+  for(let i = 0; i < movie.starRating; i++) {
+      $(stars[i]).addClass("highlighted");
+  }
+};
+
+// receives selected value and prints to breadcrumbs trail
+module.exports.displaySearchPath = (selectedPath) => {
+    let pathToPrint = (selectedPath[0].toUpperCase() + selectedPath.substring(1));
+    $("#currentSection").html(`${pathToPrint}`);
+};

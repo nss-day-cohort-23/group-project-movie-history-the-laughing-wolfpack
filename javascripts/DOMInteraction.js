@@ -121,6 +121,7 @@ $(document).on('click', '.watched-button', function () {
 $('#displayUnwatched').on('click', function () {
     $('#findMoviesContainer').html('');
     let display = 'unwatched';
+    output.displaySearchPath(display);
     fbFactory.getMovies(firebase.auth().currentUser.uid)
         .then((data) => {
             controller.startUserMovies(data, display);
@@ -131,10 +132,21 @@ $('#displayUnwatched').on('click', function () {
 $('#displayWatched').on('click', function () {
     $('#findMoviesContainer').html('');
     let display = 'watched';
+    output.displaySearchPath(display);
     fbFactory.getMovies(firebase.auth().currentUser.uid)
         .then((data) => {
             controller.startUserMovies(data, display);
         });
+});
+
+$("#displayUntracked").click(() => {
+    let display = 'untracked';
+    output.displaySearchPath(display);
+});
+
+$("#displayFavorites").click(() => {
+    let display = 'favorites';
+    output.displaySearchPath(display);
 });
 
 /******* STAR RATING ***********/
@@ -144,10 +156,10 @@ $(document).on("click", ".starRating", function() {
     // Get user
     let updatedMovieId = $(this).parent().attr("id");
     let movieObj = {};
-    
+
     // All stars in the div
     let stars = $(this).parent().children("i");
-    
+
     // Star that was currently selected
     let clickedStar = parseInt($(this).attr("value"));
 
@@ -166,26 +178,14 @@ $(document).on("click", ".starRating", function() {
     fbFactory.updateUserMovie(movieObj, updatedMovieId);
 });
 
-
-// ADD THE HIHGLIGHTED CLASS TO STARS WHEN MOVIES LOAD
-
-// module.exports.addHighlightedClass = (movie) => {
-//     let stars = $(movie).children("i");
-//     for(let i = 0; i < movie.starRating; i++) {
-//         $(stars[i]).addClass("highlighted");
-//     }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Listens for firebase's onAuthStateChanged event, toggling login/logout btns
+// accordingly
+firebase.auth().onAuthStateChanged(() => {
+  if(firebase.auth().currentUser !== null){
+    $("#login").hide();
+    $("#logout").show();
+  } else if(firebase.auth().currentUser === null){
+    $("#logout").hide();
+    $("#login").show();
+  }
+});
