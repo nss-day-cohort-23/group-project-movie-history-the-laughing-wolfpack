@@ -144,6 +144,7 @@ $('#displayFavorites').on('click', function () {
   .then(data => {
     controller.startUserMovies(data, display);
   });
+});
   
 $("#displayUntracked").click(() => {
     let display = 'untracked';
@@ -199,6 +200,7 @@ firebase.auth().onAuthStateChanged(() => {
         fbFactory.getMovies(uid)
             .then((watchList) => {
                 controller.startUserMovies(watchList, display);
+                output.displaySearchPath(display);
             });
     } else {
         $("findMoviesContainer").empty();
