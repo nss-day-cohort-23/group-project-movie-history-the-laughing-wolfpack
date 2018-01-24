@@ -82,7 +82,8 @@ module.exports.addHighlightedStars = (movie) => {
   }
 };
 
+// receives selected value and prints to breadcrumbs trail
 module.exports.displaySearchPath = (selectedPath) => {
-    console.log(selectedPath);
-    // $("#currentSection").html(`${selectedPath}`);
+    let pathToPrint = (selectedPath[0].toUpperCase() + selectedPath.substring(1));
+    $("#currentSection").html(`${pathToPrint}`);
 };
