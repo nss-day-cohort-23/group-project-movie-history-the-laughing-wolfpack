@@ -13,7 +13,7 @@ module.exports.movieOutput = (data, castArray) => {
         <li>${castArray[0].name}</li>
         <li>${castArray[1].name}</li>
         <li>${castArray[2].name}</li>
-        <a href="#" class="addToWatch" id=${data.id} class>Add To Watch List</a>      
+        <a href="#" class="addToWatch" id=${data.id} class>Add To Watch List</a>
         </div>`
     );
 };
@@ -43,11 +43,12 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     <i class="fa fa-star starRating" value="8"></i>
     <i class="fa fa-star starRating" value="9"></i>
     <i class="fa fa-star starRating" value="10"></i>
-    <div>`
+    </div>`
 );
 };
 
 module.exports.watchedMovies = (movie, actors, fbId) => {
+  console.log(movie);
     $('#findMoviesContainer').append(`
     <div class="movieCard">
         <img src='https://image.tmdb.org/t/p/w500/${movie.poster_path}' width='260px' height='370px'>
@@ -72,7 +73,14 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
         <i class="fa fa-star starRating" value="8"></i>
         <i class="fa fa-star starRating" value="9"></i>
         <i class="fa fa-star starRating" value="10"></i>
-        <div>`
+        </div>`
     );
 };
 
+module.exports.addHighlightedStars = (movie) => {
+  let elm = `div.starRatings#${movie.fbKey}`;
+  let stars = $(elm).children("i");
+  for(let i = 0; i < movie.starRating; i++) {
+      $(stars[i]).addClass("highlighted");
+  }
+};
