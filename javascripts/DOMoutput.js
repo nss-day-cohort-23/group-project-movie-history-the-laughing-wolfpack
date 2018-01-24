@@ -29,7 +29,6 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     <li>${actors[1].name}</li>
     <li>${actors[2].name}</li>
     </ul>
-    <button type = "button" id='watched-${fbId}' class='btn btn-secondary' watched-button'>Watched</button>
     <button type = "button" id='${fbId}' class='delete_button btn btn-secondary'>Delete</button><br>
     
     <div class="starRatings" id='${fbId}'>
@@ -59,7 +58,6 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
             <li>${actors[1].name}</li>
             <li>${actors[2].name}</li>
         </ul>
-        <button type = "button" id='watched-${fbId}' class='btn btn-secondary' watched-button'>Watched</button>
         <button type = "button" id='${fbId}' class='delete_button btn btn-secondary'>Delete</button><br>
         
         <div class="starRatings" id='${fbId}'>
