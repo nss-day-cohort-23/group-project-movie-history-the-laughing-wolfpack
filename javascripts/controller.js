@@ -30,6 +30,9 @@ let checkWatched = (movieObject, display) => {
   if (movieObject.watched === true && display === 'watched') {
     output.watchedMovies(movieObject, movieObject.actors, movieObject.fbKey);
     output.addHighlightedStars(movieObject);
+  } else if (movieObject.watched === true && display === 'favorites' && movieObject.starRating > 6) {
+    output.watchedMovies(movieObject, movieObject.actors, movieObject.fbKey);
+    output.addHighlightedStars(movieObject);
   } else if (movieObject.watched === false && display === 'unwatched') {
     output.watchListMovies(movieObject, movieObject.actors, movieObject.fbKey);
   }
