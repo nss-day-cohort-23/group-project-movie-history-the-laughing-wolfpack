@@ -3,7 +3,6 @@
 const $ = require('jquery');
 const firebase = require('./config/fb-config');
 const DOMInteraction = require('./DOMInteraction');
-
 const fbURL = 'https://movie-magic-21975.firebaseio.com';
 
 // UPDATE USER'S MOVIE
@@ -34,7 +33,6 @@ module.exports.deleteUserMovie = (id) => {
         });
     });
 };
-
 
 // ADD MOVIES TO FIREBASE
 module.exports.addToWatchList = (movieObj) => {
@@ -75,7 +73,6 @@ module.exports.checkMovies = (movieId) => {
         });
     });
 };
-
 
 // UPDATES THE WATCHED KEY WHEN USERS CLICK "WATCHED"
 
