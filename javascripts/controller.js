@@ -28,8 +28,8 @@ module.exports.startSearch = () => {
 
 let checkWatched = (movieObject, display) => {
     if (movieObject.watched === true && display === 'watched') {
-        console.log('WATCHED: TORF', movieObject.watched, display );
         output.watchedMovies(movieObject, movieObject.actors, movieObject.fbKey);
+        output.addHighlightedStars(movieObject);
     } else if (movieObject.watched === false && display === 'unwatched') {
         output.watchListMovies(movieObject, movieObject.actors, movieObject.fbKey);
     }
@@ -55,6 +55,7 @@ module.exports.startUserMovies = (data, display) => {
                 movieObject.actors = cast;
                 movieObject.fbKey = key;
                 movieObject.watched = movies[key].watched;
+                movieObject.starRating = movies[key].starRating;
                 movieObject.release_date = currentMovie.release_date;
                 // console.log('Watched: ', movieObject.title, movieObject.actors, movieObject.fbKey );
                 checkWatched(movieObject, display);
@@ -64,16 +65,3 @@ module.exports.startUserMovies = (data, display) => {
             });
     });
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
