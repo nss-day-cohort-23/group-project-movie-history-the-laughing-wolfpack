@@ -135,13 +135,18 @@ $('#displayWatched').on('click', function () {
         });
 });
 
+///// DISPLAY FAVORITES /////
+$('#displayFavorites').on('click', function () {
+  $('#findMoviesContainer').html('');
+  let display = 'favorites';
+  output.displaySearchPath(display);
+  fbFactory.getMovies(firebase.auth().currentUser.uid)
+  .then(data => {
+    controller.startUserMovies(data, display);
+  });
+  
 $("#displayUntracked").click(() => {
     let display = 'untracked';
-    output.displaySearchPath(display);
-});
-
-$("#displayFavorites").click(() => {
-    let display = 'favorites';
     output.displaySearchPath(display);
 });
 
