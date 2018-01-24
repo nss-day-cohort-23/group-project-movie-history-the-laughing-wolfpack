@@ -173,3 +173,18 @@ firebase.auth().onAuthStateChanged(() => {
     $("#login").show();
   }
 });
+
+// shows the user's watch list as soon as they log in
+firebase.auth().onAuthStateChanged(() => {
+    if (firebase.auth().currentUser !== null) {
+        let uid = firebase.auth().currentUser.uid;
+        let display = 'unwatched';
+        fbFactory.getMovies(uid)
+            .then((watchList) => {
+                controller.startUserMovies(watchList, display);
+            });
+    }
+});
+    
+   
+
