@@ -69,7 +69,6 @@ $(document).on("click", ".addToWatch", function () {
 // event listener on delete button
 $(document).on("click", ".delete_button", function () {
     let deleteMovieId = $(this).attr("id");
-    // passes movie database movie ID
     fbFactory.deleteUserMovie(deleteMovieId)
         .then(() => {
             return fbFactory.getMovies(firebase.auth().currentUser.uid);
