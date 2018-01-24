@@ -8,15 +8,21 @@ const auth = require('./userFactory');
 const formatter = require('./formatter');
 const output = require('./DOMoutput');
 
-
+// called on DOMInteraction when user clicks enter in search text area 
 module.exports.startSearch = () => {
+    // searchNewVal = users search query converted to lowercase
     let searchNewVal = $("#findMovies").val().toLowerCase();
+    // passes in searchNewVal to movie DB as query
     movieFactory.searchMovies(searchNewVal)
         .then((data) => {
+            // stores returned query results as movieInfo
             let movieInfo = data;
+            // forEach over the loop of query results to send movie.id to function that returns movie's actors on movieFactory.js
             movieInfo.forEach((movie) => {
                 movieFactory.getActors(movie.id)
+                // receives cast for individual movie
                     .then((castArray) => {
+                        // sends full movie object and cast array to prep for print to DOM
                         output.movieOutput(movie, castArray);
                     })
                     .catch((error) => {

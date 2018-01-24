@@ -3,6 +3,7 @@
 const $ = require('jquery');
 const movieKey = require('./config/movieCreds');
 
+// data = full movie Object; castArray = array of cast for movie
 module.exports.movieOutput = (data, castArray) => {
     $("#findMoviesContainer").append(
         `<div class="movieCard" id=${data.id}>

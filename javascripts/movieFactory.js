@@ -5,13 +5,12 @@ const firebase = require('./config/fb-config');
 const movieKey = require('./config/movieCreds');
 
 
-
+// receives what user entered, returns results back in controller.js startSearch()
 module.exports.searchMovies = (input) => {
     return new Promise((resolve, reject) => {
         $.ajax({
             url: `https://api.themoviedb.org/3/search/movie?api_key=${movieKey.apiKey}&query=${input}`
         }).done( (data) => {
-            console.log("promise results", data.results);
             resolve(data.results);
     
         }).fail((error) => {
@@ -21,7 +20,7 @@ module.exports.searchMovies = (input) => {
     });
 };
 
-
+// receives individual movie ids passed in from controller.js that are a result of user's search, returns them to controller.js startSearch
 module.exports.getActors = (movieId) => {
     return new Promise((resolve, reject) => {
         $.ajax({
