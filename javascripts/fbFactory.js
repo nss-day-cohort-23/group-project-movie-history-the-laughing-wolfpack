@@ -36,7 +36,7 @@ module.exports.deleteUserMovie = (id) => {
 };
 
 
-// ADD MOVIES TO FIREBASE
+// receives movie object including movie DB ID, user id, watched: false, rating: null
 module.exports.addToWatchList = (movieObj) => {
     return new Promise( (resolve, reject) => {
         $.ajax({

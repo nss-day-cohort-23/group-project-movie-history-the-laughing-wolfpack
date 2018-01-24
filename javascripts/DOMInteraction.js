@@ -46,25 +46,29 @@ $("#findMovies").keydown((key) => {
 });
 
 
-///// ADD TO WATCHLIST /////
+// event listener on Add To Watch Btn
 $(document).on("click", ".addToWatch", function () {
+    // collects DB Movie ID
     let addedMovieId = $(this).attr("id");
     let currentUser = firebase.auth().currentUser;
+    // preps movie object
     let movieObj = {
         movieId: addedMovieId,
         uid: currentUser.uid,
         watched: false,
         rating: null
     };
+    // passes movie object to add to firebase
     fbFactory.addToWatchList(movieObj)
         .then((data) => {
         });
 });
 
 
-///// DELETE UWATCHED MOVIE /////
+// event listener on delete button
 $(document).on("click", ".delete_button", function () {
     let deleteMovieId = $(this).attr("id");
+    // passes movie database movie ID
     fbFactory.deleteUserMovie(deleteMovieId)
         .then(() => {
             return fbFactory.getMovies(firebase.auth().currentUser.uid);
