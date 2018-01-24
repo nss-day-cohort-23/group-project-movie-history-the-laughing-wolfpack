@@ -8,7 +8,8 @@ module.exports.movieOutput = (data, castArray) => {
         `<div class="movieCard" id=${data.id}>
         <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="moviePoster" alt="No Movie Poster Available" width='260px' height='370px'>
         <br>
-        <h7>${data.title} <i>(${data.release_date.slice(0, 4)})</i></h7>
+        <h4>${data.title} <i>(${data.release_date.slice(0, 4)})</i></h4>
+        <h6>Starring: </h6>
         <ul>
         <li>${castArray[0].name}</li>
         <li>${castArray[1].name}</li>
@@ -22,8 +23,8 @@ module.exports.watchListMovies = (movie, actors, fbId) => {
     $('#findMoviesContainer').append(`
     <div class="movieCard">
     <img src='https://image.tmdb.org/t/p/w500/${movie.poster_path}' width='260px' height='370px'>
-    <h2>${movie.title} (${movie.release_date.slice(0, 4)})</h2>
-    <h3>Starring: </h3>
+    <h4>${movie.title} (${movie.release_date.slice(0, 4)})</h4>
+    <h6>Starring: </h6>
     <ul>
     <li>${actors[0].name}</li>
     <li>${actors[1].name}</li>
@@ -50,8 +51,8 @@ module.exports.watchedMovies = (movie, actors, fbId) => {
     $('#findMoviesContainer').append(`
     <div class="movieCard">
         <img src='https://image.tmdb.org/t/p/w500/${movie.poster_path}' width='260px' height='370px'>
-        <h2>${movie.title} (${movie.release_date.slice(0, 4)})</h2>
-        <h3>Starring: </h3>
+        <h4>${movie.title} (${movie.release_date.slice(0, 4)})</h4>
+        <h6>Starring: </h6>
         <ul>
             <li>${actors[0].name}</li>
             <li>${actors[1].name}</li>

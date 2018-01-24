@@ -12,8 +12,7 @@ const output = require('./DOMoutput');
 module.exports.startSearch = () => {
   let searchNewVal = $("#findMovies").val().toLowerCase();
   movieFactory.searchMovies(searchNewVal)
-    .then((data) => {
-      let movieInfo = data;
+    .then((movieInfo) => {
       movieInfo.forEach((movie) => {
         movieFactory.getActors(movie.id)
           .then((castArray) => {

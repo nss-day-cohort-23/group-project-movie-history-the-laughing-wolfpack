@@ -31,7 +31,7 @@ $("#logout").click(() => {
 });
 
 
-///// START SEEACH NEW MOVIES /////
+///// START SEARCH NEW MOVIES /////
 $("#findMovies").keydown((key) => {
     $('#findMoviesContainer').html('');
     let newSearchArr = [];
