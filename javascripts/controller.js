@@ -54,8 +54,8 @@ module.exports.startUserMovies = (data, display) => {
         movieObject.actors = cast;
         movieObject.fbKey = key;
         movieObject.watched = movies[key].watched;
+        movieObject.starRating = movies[key].starRating;
         movieObject.release_date = currentMovie.release_date;
-        // console.log('Watched: ', movieObject.title, movieObject.actors, movieObject.fbKey );
         checkWatched(movieObject, display);
       })
       .catch((error) => {
