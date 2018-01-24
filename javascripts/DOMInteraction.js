@@ -31,7 +31,7 @@ $("#logout").click(() => {
 });
 
 
-///// START SEEACH NEW MOVIES /////
+///// START SEARCH NEW MOVIES /////
 $("#findMovies").keydown((key) => {
     $('#findMoviesContainer').html('');
     let newSearchArr = [];
@@ -117,6 +117,7 @@ $(document).on('click', '.watched-button', function () {
 $('#displayUnwatched').on('click', function () {
     $('#findMoviesContainer').html('');
     let display = 'unwatched';
+    output.displaySearchPath(display);
     fbFactory.getMovies(firebase.auth().currentUser.uid)
         .then((data) => {
             controller.startUserMovies(data, display);
@@ -127,10 +128,26 @@ $('#displayUnwatched').on('click', function () {
 $('#displayWatched').on('click', function () {
     $('#findMoviesContainer').html('');
     let display = 'watched';
+    output.displaySearchPath(display);
     fbFactory.getMovies(firebase.auth().currentUser.uid)
         .then((data) => {
             controller.startUserMovies(data, display);
         });
+});
+
+///// DISPLAY FAVORITES /////
+$('#displayFavorites').on('click', function () {
+  $('#findMoviesContainer').html('');
+  let display = 'favorites';
+  output.displaySearchPath(display);
+  fbFactory.getMovies(firebase.auth().currentUser.uid)
+  .then(data => {
+    controller.startUserMovies(data, display);
+  });
+  
+$("#displayUntracked").click(() => {
+    let display = 'untracked';
+    output.displaySearchPath(display);
 });
 
 /******* STAR RATING ***********/

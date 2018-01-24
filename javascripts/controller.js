@@ -12,8 +12,7 @@ const output = require('./DOMoutput');
 module.exports.startSearch = () => {
   let searchNewVal = $("#findMovies").val().toLowerCase();
   movieFactory.searchMovies(searchNewVal)
-    .then((data) => {
-      let movieInfo = data;
+    .then((movieInfo) => {
       movieInfo.forEach((movie) => {
         movieFactory.getActors(movie.id)
           .then((castArray) => {
@@ -28,6 +27,9 @@ module.exports.startSearch = () => {
 
 let checkWatched = (movieObject, display) => {
   if (movieObject.watched === true && display === 'watched') {
+    output.watchedMovies(movieObject, movieObject.actors, movieObject.fbKey);
+    output.addHighlightedStars(movieObject);
+  } else if (movieObject.watched === true && display === 'favorites' && movieObject.starRating > 6) {
     output.watchedMovies(movieObject, movieObject.actors, movieObject.fbKey);
     output.addHighlightedStars(movieObject);
   } else if (movieObject.watched === false && display === 'unwatched') {
