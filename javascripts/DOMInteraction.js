@@ -133,6 +133,15 @@ $('#displayWatched').on('click', function () {
         });
 });
 
+$('#displayFavorites').on('click', function () {
+  $('#findMoviesContainer').html('');
+  let display = 'favorites';
+  fbFactory.getMovies(firebase.auth().currentUser.uid)
+  .then(data => {
+    controller.startUserMovies(data, display);
+  });
+});
+
 /******* STAR RATING ***********/
 
 $(document).on("click", ".starRating", function() {
